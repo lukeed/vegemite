@@ -15,35 +15,34 @@ function loop(list, data, state, idx) {
 export default function (obj) {
 	var $, tree={}, hooks=[], value = obj || {};
 
-	return Object.defineProperty($ = {
-		on: function (evt, func) {
+	return $ = {
+		get state() {
+			return value;
+		},
+
+		on(evt, func) {
 			tree[evt] = (tree[evt] || []).concat(func);
-			return function () {
+			return () => {
 				tree[evt].splice(tree[evt].indexOf(func) >>> 0, 1);
 			};
 		},
 
-		set: function (obj, idx) {
+		set(obj, idx) {
 			value = obj;
 			for (idx=0; idx < hooks.length; idx++) {
 				hooks[idx]($.state);
 			}
 		},
 
-		listen: function (func) {
+		listen(func) {
 			hooks.push(func);
-			return function () {
+			return () => {
 				hooks.splice(hooks.indexOf(func) >>> 0, 1);
 			};
 		},
 
-		dispatch: function (evt, data) {
+		dispatch(evt, data) {
 			return loop(tree[evt] || [], data, klona(value), 0).then($.set);
 		}
-	}, 'state', {
-		enumerable: true,
-		get: function () {
-			return value;
-		}
-	});
+	};
 }
