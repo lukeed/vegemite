@@ -1,8 +1,7 @@
 {
-  "name": "wip",
-  "private": true,
+  "name": "vegemite",
   "version": "0.0.0",
-  "repository": "lukeed/WIP",
+  "repository": "lukeed/vegemite",
   "description": "WIP",
   "module": "dist/index.mjs",
   "unpkg": "dist/index.min.js",
