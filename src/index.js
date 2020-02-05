@@ -15,6 +15,10 @@ function loop(list, data, state, idx) {
 export default function (obj) {
 	var $, tree={}, hooks={}, value = obj || {};
 
+	var rem = (arr, func) => {
+		arr.splice(arr.indexOf(func) >>> 0, 1);
+	}
+
 	return $ = {
 		get state() {
 			return value;
@@ -22,9 +26,7 @@ export default function (obj) {
 
 		on(evt, func) {
 			tree[evt] = (tree[evt] || []).concat(func);
-			return () => {
-				tree[evt].splice(tree[evt].indexOf(func) >>> 0, 1);
-			};
+			return () => rem(tree[evt], func);
 		},
 
 		set(evt, obj) {
@@ -34,13 +36,9 @@ export default function (obj) {
 		},
 
 		listen(evt, func) {
-			if (typeof evt == 'function') {
-				func=evt; evt='*';
-			}
+			if (typeof evt == 'function') {func=evt; evt='*'}
 			hooks[evt] = (hooks[evt] || []).concat(func);
-			return () => {
-				hooks[evt].splice(hooks[evt].indexOf(func) >>> 0, 1);
-			};
+			return () => rem(hooks[evt], func);
 		},
 
 		dispatch(evt, data) {
