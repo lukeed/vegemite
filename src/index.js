@@ -39,7 +39,7 @@ export default function (obj) {
 			}
 			hooks[evt] = (hooks[evt] || []).concat(func);
 			return () => {
-				hooks.splice(hooks.indexOf(func) >>> 0, 1);
+				hooks[evt].splice(hooks[evt].indexOf(func) >>> 0, 1);
 			};
 		},
 
