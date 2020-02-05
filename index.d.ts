@@ -6,7 +6,7 @@ export interface Store<T, M> {
 	readonly state: T;
 
 	set(state: T): void;
-	set<K extends keyof M>(event: K | '*', state: T): void;
+	set<K extends keyof M>(state: T, event: K | '*'): void;
 
 	on<K extends keyof M>(event: K, handler: Handler<T, M[K]>): Unsubscriber;
 	dispatch<K extends keyof M>(event: K, data: M[K]): Promise<void>;

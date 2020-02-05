@@ -29,8 +29,7 @@ export default function (obj) {
 			return () => rem(tree[evt], func);
 		},
 
-		set(evt, obj) {
-			if (typeof evt != 'string') {obj=evt; evt=''};
+		set(obj, evt) {
 			let i=0, prev=value, arr=(hooks['*'] || []).concat(evt && hooks[evt] || []);
 			for (value=obj; i < arr.length; i++) arr[i]($.state, prev);
 		},
@@ -42,7 +41,7 @@ export default function (obj) {
 		},
 
 		dispatch(evt, data) {
-			return loop(tree[evt] || [], data, klona(value), 0).then($.set.bind($, evt));
+			return loop(tree[evt] || [], data, klona(value), 0).then(x => $.set(x, evt));
 		}
 	};
 }
