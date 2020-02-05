@@ -27,13 +27,10 @@ export default function (obj) {
 			};
 		},
 
-		set(evt, obj, arr, i) {
-			if (typeof evt != 'string') {
-				obj=evt; evt='';
-			}
-			value = obj;
-			arr = (hooks['*'] || []).concat(evt && hooks[evt] || []);
-			for (i=0; i < arr.length; i++) arr[i]($.state);
+		set(evt, obj) {
+			if (typeof evt != 'string') {obj=evt; evt=''};
+			let i=0, prev=value, arr=(hooks['*'] || []).concat(evt && hooks[evt] || []);
+			for (value=obj; i < arr.length; i++) arr[i]($.state, prev);
 		},
 
 		listen(evt, func) {

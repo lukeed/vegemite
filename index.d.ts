@@ -1,4 +1,4 @@
-export type Listener<T> = (state: T) => any;
+export type Listener<T> = (state: T, prevState: T) => any;
 export type Handler<T, X> = (state: T, data: X) => T | void;
 
 export interface Store<T, M> {
