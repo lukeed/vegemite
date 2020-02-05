@@ -13,7 +13,7 @@ function loop(list, data, state, idx) {
 }
 
 export default function (obj) {
-	var $, tree={}, hooks=[], value = obj || {};
+	var $, tree={}, hooks={}, value = obj || {};
 
 	return $ = {
 		get state() {
@@ -27,15 +27,17 @@ export default function (obj) {
 			};
 		},
 
-		set(obj, idx) {
+		set(obj, type, arr, i) {
 			value = obj;
-			for (idx=0; idx < hooks.length; idx++) {
-				hooks[idx]($.state);
-			}
+			arr = (hooks['*'] || []).concat(type && hooks[type] || [])
+			for (i=0; i < arr.length; i++) arr[i]($.state);
 		},
 
-		listen(func) {
-			hooks.push(func);
+		listen(evt, func) {
+			if (typeof evt == 'function') {
+				func=evt; evt='*';
+			}
+			hooks[evt] = (hooks[evt] || []).concat(func);
 			return () => {
 				hooks.splice(hooks.indexOf(func) >>> 0, 1);
 			};
