@@ -27,9 +27,12 @@ export default function (obj) {
 			};
 		},
 
-		set(obj, type, arr, i) {
+		set(evt, obj, arr, i) {
+			if (typeof evt != 'string') {
+				obj=evt; evt='';
+			}
 			value = obj;
-			arr = (hooks['*'] || []).concat(type && hooks[type] || [])
+			arr = (hooks['*'] || []).concat(evt && hooks[evt] || []);
 			for (i=0; i < arr.length; i++) arr[i]($.state);
 		},
 
@@ -44,7 +47,7 @@ export default function (obj) {
 		},
 
 		dispatch(evt, data) {
-			return loop(tree[evt] || [], data, klona(value), 0).then($.set);
+			return loop(tree[evt] || [], data, klona(value), 0).then($.set.bind($, evt));
 		}
 	};
 }
