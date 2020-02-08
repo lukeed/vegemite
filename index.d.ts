@@ -15,4 +15,4 @@ export interface Store<T, M> {
 	listen<K extends keyof M>(event: K | '*', func: Listener<T>): Unsubscriber;
 }
 
-export default function<M, T>(obj: T): Store<T, M>;
+export default function<M, T>(obj?: T): Store<T, M>;
