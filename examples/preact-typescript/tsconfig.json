@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "baseUrl": "src",
+    "module": "esnext",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "removeComments": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "jsxFactory": "h",
+    "jsx": "react"
+  },
+  "include": [
+    "./**/*.tsx",
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}
