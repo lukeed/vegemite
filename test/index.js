@@ -36,7 +36,7 @@ test('$.set', t => {
 });
 
 test('$.listen', t => {
-	t.plan(12);
+	t.plan(13);
 
 	let ctx = lib();
 
@@ -68,6 +68,12 @@ test('$.listen', t => {
 
 	console.log(`$.set(data, 'hello')`);
 	ctx.set(data, 'hello'); // => +1 (foo)
+
+	foo();
+
+	console.log(`$.set({ x: 123 })`);
+	ctx.listen((x, prev) => t.deepEqual(prev, data, '(bat) listeners also get previous state'));
+	ctx.set({ x: 123 }, 'hello'); // +1 (bat)
 });
 
 test('$.dispatch', async t => {
