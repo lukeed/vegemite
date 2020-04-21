@@ -131,34 +131,36 @@ test('$.on', async t => {
 });
 
 test('$.on :: mutator', async t => {
-	t.plan(5);
+	t.plan(9);
 
-	let ctx = lib({ num: 11 });
+	let curr = { num: 11 };
 	let evt = { value: 3 };
+	let ctx = lib(curr);
 
 	ctx.on('increment', state => {
 		state.num++;
+		t.deepEqual(ctx.state, curr, '(increment) IMMUTABLE');
 	});
 
 	ctx.on('subtract', (state, event) => {
 		t.deepEqual(event, evt, '~> hook received event data');
 		state.num -= event.value;
+		t.deepEqual(ctx.state, curr, '(subtract) IMMUTABLE');
 	});
 
 	await ctx.dispatch('increment');
-	t.deepEqual(ctx.state, { num: 12 }, '~> increment');
+	t.deepEqual(ctx.state, curr = { num: 12 }, '~> increment');
 
 	await ctx.dispatch('subtract', evt);
-	t.deepEqual(ctx.state, { num: 9 }, '~> subtract x1');
+	t.deepEqual(ctx.state, curr = { num: 9 }, '~> subtract x1');
 
 	ctx.on('subtract', (state) => {
 		state.num = 0;
+		t.deepEqual(ctx.state, curr, '(subtract) IMMUTABLE');
 	});
 
 	await ctx.dispatch('subtract', evt);
-	t.deepEqual(ctx.state, { num: 0 }, '~> subtract x2');
-
-	t.end();
+	t.deepEqual(ctx.state, curr = { num: 0 }, '~> subtract x2');
 });
 
 test('$.on :: return object', async t => {
