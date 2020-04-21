@@ -5,7 +5,7 @@ function loop(list, data, state, idx) {
 	if (!fn) return Promise.resolve(state);
 
 	tmp = fn(state, data);
-	if (tmp == null) return Promise.resolve(state);
+	if (tmp == null) return loop(list, data, state, idx);
 	if (typeof tmp.then == 'function') return tmp.then(d => loop(list, data, d, idx));
 
 	if (typeof tmp == 'object') state = tmp;
