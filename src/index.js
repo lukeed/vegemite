@@ -9,7 +9,7 @@ function loop(list, data, state, idx) {
 	if (typeof tmp.then == 'function') return tmp.then(d => loop(list, data, d, idx));
 
 	if (typeof tmp == 'object') state = tmp;
-	return (idx < list.length) ? loop(list, data, state, idx) : Promise.resolve(state);
+	return loop(list, data, state, idx);
 }
 
 export default function (obj) {
