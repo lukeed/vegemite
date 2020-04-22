@@ -1,4 +1,4 @@
-export type Handler<T, X> = (state: T, data: X) => T | void;
+export type Handler<T, X> = (state: T, data: X) => T | void | Promise<T | void>;
 export type Listener<T> = (state: T, prevState: T) => any;
 export type Unsubscriber = () => void;
 
