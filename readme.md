@@ -3,17 +3,17 @@
 </div>
 
 <div align="center">
-  <a href="https://npmjs.org/package/httpie">
-    <img src="https://badgen.now.sh/npm/v/httpie" alt="version" />
+  <a href="https://npmjs.org/package/TODO">
+    <img src="https://badgen.now.sh/npm/v/TODO" alt="version" />
   </a>
-  <a href="https://travis-ci.org/lukeed/httpie">
-    <img src="https://badgen.now.sh/travis/lukeed/httpie" alt="travis" />
+  <a href="https://github.com/lukeed/TODO/actions">
+    <img src="https://badgen.net/github/status/lukeed/TODO" alt="status" />
   </a>
-  <a href="https://codecov.io/gh/lukeed/httpie">
-    <img src="https://badgen.now.sh/codecov/c/github/lukeed/httpie" alt="codecov" />
+  <a href="https://codecov.io/gh/lukeed/TODO">
+    <img src="https://badgen.now.sh/codecov/c/github/lukeed/TODO" alt="codecov" />
   </a>
-  <a href="https://npmjs.org/package/httpie">
-    <img src="https://badgen.now.sh/npm/dm/httpie" alt="downloads" />
+  <a href="https://npmjs.org/package/TODO">
+    <img src="https://badgen.now.sh/npm/dm/TODO" alt="downloads" />
   </a>
 </div>
 
@@ -149,7 +149,7 @@ Forcibly set the instance's state.
 
 When `set()` is run, all related subscribers/listeners are called.<br>Optionally pass an `event` to trigger a specific set of listeners.
 
-> **Note:** This is automatically called at the end of a [`dispatch()`]() chain.
+> **Note:** This is automatically called at the end of a [`dispatch()`](#vegemitedispatchevent-eventdata) chain.
 
 #### state
 Type: `State`
@@ -168,7 +168,7 @@ Sends a new message to an event/topic.
 
 When `dispatch()` is called, all related action handlers (via `on()`) are run to produce a new state. Once this chain is complete, `set()` is invoked with the new state, which will trigger any listeners for the `event` (in addition to global listeners).
 
-> **Note:** For events that do not require `eventData`, TypeScript users will need to dispatch an `undefined` payload, or similar.
+> **Attention TypeScript Users:**<br>For events that do not require `eventData`, you must dispatch with an `undefined` payload, or similar.
 
 #### event
 Type: `String`
@@ -187,15 +187,15 @@ Any data to send the topic.
 
 Action handlers can be thought of as "producers" or "reducers" – they are functions that, when matched, are invoked to help create a new state.
 
-Action handlers belong to a specific event and are assigned via `on()`. Multiple handlers may exist for a single event topic. When this is the case, the list of handlers will be executed in the order that they were assigned. This allows handlers to access previous handlers' results and use those as part of its own computation.
+Action handlers belong to a specific event and are assigned via `on()`. Multiple handlers may exist for a single event topic. When this is the case, the list of handlers will be executed in the order that they were assigned. This allows handlers to access previous handlers' results and use those as part of its own computation, if desired.
 
-Every handler receives the current `state` as its first parameter and then any `eventData` that was sent to the event (via `dispatch()`). Handlers may return a new `state` object or they may choose to mutate the `state` and forgo a return entirely. A `Promise` may also be returned that resolves either to a new state or to a mutation.
+Every handler receives the current `state` as its first parameter and then any `eventData` that was sent to the event (via `dispatch()`). Handlers may return a new `state` object or they may choose to mutate the `state` in place and forgo a return entirely. A `Promise` may also be returned that resolves either to a new state or to a mutation.
 
 ```ts
 type Handler<T, X> = (state: T, eventData: X) => Promise<T | void> | T | void;
 ```
 
-While an event's handlers are running (dubbed the "dispatch chain"), you are free to mutate the `state` and `eventData` object _as much as you'd like_ &mdash; mutations have no effect on the instance's actual state! Once the "dispatch chain" has resolved (aka, _all_ handlers have completed), Vegemite will promote the final `state` object as its new actual state (via `set(state, event)`).
+While an event's handlers are running (dubbed the "dispatch chain"), you are free to mutate the `state` and `eventData` object _as much as you'd like_ &mdash; mutations have no effect on the instance's actual state during this time! Once the "dispatch chain" has resolved (aka, _all_ handlers have completed), Vegemite will promote the chain's final `state` object as the instance's new actual state (via `set(state, event)`).
 
 At this point, the instance's state has been updated, which means `ctx.state` will reflect the current changes. Additionally, any [subscribers](#subscribers) (via `listen()`) are enqueued for action.
 
@@ -216,9 +216,9 @@ When an event's "dispatch chain" has resolved, any subscribers for that event wi
 
 ## TypeScript Support
 
-Vegemite is made to work with an "EventMap" &mdash; this is interface an interface whose keys are the names of your events and whose values are the event-datas you expect to pass along as the message. With this information alone, TypeScript and `vegemite` can ensure that **all** of your event publishers and subscribers are passing or expecting the correct data types.
+Vegemite is made to work with an "EventMap" &mdash; this is an interface whose keys are the names of your events and whose values are the event-datas you expect to pass along as the message. With this information alone, TypeScript and `vegemite` can ensure that **all** of your event publishers and subscribers are passing or expecting the correct data types.
 
-Additionally, vegemite requires a `State` descriptor &mdash; this is a separate interface that describes _what_ you want this `vegemite` instance to contain at all times. With this information, TypeScript can ensure your actions/handlers are abiding by the rules & not causing mischief.
+Additionally, `vegemite` requires a `State` descriptor &mdash; this is a separate interface that describes _what_ you want this `vegemite` instance to contain at all times. With this information, TypeScript can ensure your actions/handlers are abiding by the rules & not causing mischief.
 
 ```ts
 interface Todo {
