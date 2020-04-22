@@ -112,9 +112,25 @@ A getter function that returns a snapshot of the current state.
 Returns: `Function`
 
 Assign a new action handler for a specific event.
-Returns an unscriber function that, when called, will detach this `handler`.
+Returns an unsubscriber function that, when called, will detach this `handler`.
 
-> **Imporant:** When more than one `handler` exists for an event, they are executed in the order that they were assigned.
+> **Important:** When more than one `handler` exists for an event, they are executed in the order that they were assigned.
+
+```js
+let store = vegemite({ count: 5 });
+
+let detach = store.on('count:add', (state, event) => {
+	state.count += event.value;
+});
+
+await store.dispatch('count:add', { value: 10 });
+console.log(store.state); //=> { count: 15 }
+
+detach(); // deactivated
+
+await store.dispatch('count:add', { value: 3 });
+console.log(store.state); //=> { count: 15 } (unchanged)
+```
 
 #### event
 Type: `String`
@@ -132,6 +148,30 @@ Returns: `Function`
 
 Attach a new subscription &mdash; when no `event` is specified, then the `subscriber` will listen to _all_ events.
 
+Returns an unsubscriber function that, when called, will detach this `subscriber`.
+
+> **Important:** When more than one `subscriber` exists for an event (or globally), they are executed in the order that they were assigned.
+
+```js
+let store = vegemite({ count: 5 });
+
+store.on('increment', state => {
+	state.count++;
+});
+
+let unlisten = store.listen('increment', (state, prevState) => {
+	console.log(`heard increment: ${prevState.count} ~> ${state.count}`);
+});
+
+await store.dispatch('increment');
+//=> heard increment: 5 ~> 6
+
+unlisten(); // deactivated
+
+await store.dispatch('increment');
+// (silence)
+```
+
 #### event
 Type: `String`
 
@@ -141,6 +181,7 @@ The event/topic name, if any.
 Type: `Subscriber`
 
 See [Subscribers](#subscribers) below.
+
 
 ### Vegemite.set(state, event?)
 Returns: `void`
@@ -160,6 +201,7 @@ The new `State` data.
 Type: `String`
 
 The event/topic on whose behalf you're committing.
+
 
 ### Vegemite.dispatch(event, eventData)
 Returns: `Promise<void>`
