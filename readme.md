@@ -3,17 +3,17 @@
 </div>
 
 <div align="center">
-  <a href="https://npmjs.org/package/TODO">
-    <img src="https://badgen.now.sh/npm/v/TODO" alt="version" />
+  <a href="https://npmjs.org/package/vegemite">
+    <img src="https://badgen.now.sh/npm/v/vegemite" alt="version" />
   </a>
-  <a href="https://github.com/lukeed/TODO/actions">
-    <img src="https://badgen.net/github/status/lukeed/TODO" alt="status" />
+  <a href="https://github.com/lukeed/vegemite/actions">
+    <img src="https://badgen.net/github/status/lukeed/vegemite" alt="status" />
   </a>
-  <a href="https://codecov.io/gh/lukeed/TODO">
-    <img src="https://badgen.now.sh/codecov/c/github/lukeed/TODO" alt="codecov" />
+  <a href="https://codecov.io/gh/lukeed/vegemite">
+    <img src="https://badgen.now.sh/codecov/c/github/lukeed/vegemite" alt="codecov" />
   </a>
-  <a href="https://npmjs.org/package/TODO">
-    <img src="https://badgen.now.sh/npm/dm/TODO" alt="downloads" />
+  <a href="https://npmjs.org/package/vegemite">
+    <img src="https://badgen.now.sh/npm/dm/vegemite" alt="downloads" />
   </a>
 </div>
 
