@@ -30,8 +30,7 @@ export default function (obj) {
 		},
 
 		set(obj, evt) {
-			let i=0, prev=value, arr=(hooks['*'] || []).concat(evt && hooks[evt] || []);
-			for (value=obj; i < arr.length; i++) arr[i]($.state, prev);
+			loop((hooks['*'] || []).concat(evt && hooks[evt] || []), value, klona(value = obj), 0);
 		},
 
 		listen(evt, func) {
