@@ -1,6 +1,6 @@
 {
   "name": "vegemite",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "repository": "lukeed/vegemite",
   "description": "A Pub/Sub state manager you'll love... or hate",
   "module": "dist/index.mjs",
