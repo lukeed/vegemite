@@ -44,8 +44,8 @@
 	let state = todomvc.state;
 	todomvc.listen(obj => state = obj);
 
-	$: state.actives = state.todos.filter(FILTER.active);
-	$: state.visibles = state.todos.filter(FILTER[state.filter]);
+	$: actives = state.todos.filter(FILTER.active).length;
+	$: visibles = state.todos.filter(FILTER[state.filter]);
 </script>
 
 <div class="todoapp">
@@ -64,16 +64,16 @@
 				type="checkbox"
 				class="toggle-all"
 				on:change={ontoggleall}
-				checked={!state.actives.length}
+				checked={!actives}
 			/>
 
 			<ul class="todo-list">
-				{#each state.visibles as todo (todo.id)}
+				{#each visibles as todo (todo.id)}
 					<Item {...todo} />
 				{/each}
 			</ul>
 		</section>
 
-		<Footer {...state} />
+		<Footer {...state} count={actives} />
 	{/if}
 </div>

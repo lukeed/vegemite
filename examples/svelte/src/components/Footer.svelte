@@ -2,9 +2,9 @@
 	import { todomvc } from '../store';
 	import { pluralize, FILTER, toFilter } from '../utils';
 
+	export let count = 0;
 	export let todos = [];
 	export let filter = '';
-	export let actives = [];
 
 	// ---
 
@@ -31,7 +31,7 @@
 
 <footer class="footer">
 	<span class="todo-count">
-		<strong>{actives.length}</strong> {pluralize(actives.length, 'item')} left
+		<strong>{count}</strong> {pluralize(count, 'item')} left
 	</span>
 
 	<ul class="filters">
@@ -40,7 +40,7 @@
 		<li><a href="#/completed" class={filter == 'completed' && 'selected'}>Completed</a></li>
 	</ul>
 
-	{#if (todos.length - actives.length) > 0}
+	{#if (todos.length - count) > 0}
 		<button class="clear-completed" on:click={onClear}>Clear completed</button>
 	{/if}
 </footer>

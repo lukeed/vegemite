@@ -23,7 +23,7 @@ function onClear() {
 }
 
 export default function (props) {
-	const { todos, filter, actives } = props;
+	const { todos, filter, count } = props;
 
 	useEffect(() => {
 		addEventListener('hashchange', onhashchange);
@@ -33,7 +33,7 @@ export default function (props) {
 	return (
 		<footer class="footer">
 			<span class="todo-count">
-				<strong>{actives.length}</strong> {pluralize(actives.length, 'item')} left
+				<strong>{count}</strong> {pluralize(count, 'item')} left
 			</span>
 
 			<ul class="filters">
@@ -43,7 +43,7 @@ export default function (props) {
 			</ul>
 
 			{
-				(todos.length - actives.length) > 0 && (
+				(todos.length - count) > 0 && (
 					<button class="clear-completed" onclick={onClear}>Clear completed</button>
 				)
 			}

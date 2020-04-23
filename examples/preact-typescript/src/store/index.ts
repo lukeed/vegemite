@@ -13,14 +13,10 @@ interface EventMap {
 
 interface State {
 	todos: Todo[];
-	actives: Todo[];
-	visibles: Todo[];
 	filter: Filter;
 }
 
 export const todomvc = vegemite<EventMap, State>({
 	todos: [],
-	actives: [],
-	visibles: [],
 	filter: toFilter(),
 });

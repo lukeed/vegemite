@@ -45,8 +45,8 @@ export default function () {
 	const [state, setState] = useState(todomvc.state);
 	useEffect(() => todomvc.listen(setState));
 
-	state.actives = state.todos.filter(FILTER.active);
-	state.visibles = state.todos.filter(FILTER[state.filter]);
+	const actives = state.todos.filter(FILTER.active).length;
+	const visibles = state.todos.filter(FILTER[state.filter]);
 
 	return (
 		<div class="todoapp">
@@ -66,13 +66,13 @@ export default function () {
 							type="checkbox"
 							class="toggle-all"
 							onchange={ontoggleall}
-							checked={!state.actives.length}
+							checked={!actives}
 						/>
 						<ul class="todo-list">
-							{ state.visibles.map(x => <Item key={x.id} {...x} />) }
+							{ visibles.map(x => <Item key={x.id} {...x} />) }
 						</ul>
 					</section>,
-					<Footer {...state} />
+					<Footer {...state} count={actives} />
 				] : null
 			}
 		</div>
