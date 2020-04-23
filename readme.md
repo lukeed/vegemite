@@ -25,7 +25,7 @@
 * **Composable**<br>_Attach/Detach action handlers as needed. Components can bring their own handlers!_
 * **Immutability**<br>Modifications or mutations within a handler do not affect state until completion
 * **Full [TypeScript Support](#typescript-support)**<br>Utilize TypeScript for in-action guards and validations
-* **Extremely lightweight**<br>Weighs only 636 bytes, including dependencies!
+* **Extremely lightweight**<br>Weighs only 623 bytes, including dependencies!
 
 
 ## Install
