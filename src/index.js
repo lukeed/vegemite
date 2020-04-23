@@ -21,7 +21,7 @@ export default function (obj) {
 
 	return $ = {
 		get state() {
-			return value;
+			return klona(value);
 		},
 
 		on(evt, func) {
