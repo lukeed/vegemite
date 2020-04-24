@@ -23,9 +23,9 @@
 
 * **Familiar**<br>_Inspired by [Immer](https://github.com/immerjs/immer) and [Redux](https://github.com/reduxjs/redux)_
 * **Composable**<br>_Attach/Detach action handlers as needed. Components can bring their own handlers!_
-* **Immutability**<br>Modifications or mutations within a handler do not affect state until completion
-* **Full [TypeScript Support](#typescript-support)**<br>Utilize TypeScript for in-action guards and validations
-* **Extremely lightweight**<br>Weighs only 623 bytes, including dependencies!
+* **Immutability**<br>_Modifications or mutations within a handler do not affect state until completion_
+* **Full [TypeScript Support](#typescript-support)**<br>_Utilize TypeScript for in-action guards and validations_
+* **Extremely lightweight**<br>_Weighs only 623 bytes, including dependencies!_
 
 
 ## Install
