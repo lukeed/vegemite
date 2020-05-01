@@ -77,12 +77,12 @@ export class TodoApp {
 								/>
 								<ul class="todo-list">
 									{visibles.map(({ id, title, ...x }) => (
-										<todo-item uid={id} text={title} {...x} />
+										<todo-item key={id} uid={id} text={title} {...x} />
 									))}
 								</ul>
 							</section>,
 							<todo-footer {...this.state} count={actives} />,
-					  ]
+						]
 					: null}
 			</div>
 		);
