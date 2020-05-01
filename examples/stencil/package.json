@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "stencil build",
+    "watch": "stencil build --dev --watch --serve"
+  },
+  "dependencies": {
+    "vegemite": "file:../../"
+  },
+  "devDependencies": {
+    "@stencil/core": "^1.12.2",
+    "workbox-build": "4.3.1"
+  }
+}

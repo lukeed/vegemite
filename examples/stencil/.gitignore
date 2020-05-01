@@ -1,0 +1,14 @@
+/node_modules
+*-lock.json
+.DS_Store
+*.lock
+*.log
+
+/www
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
