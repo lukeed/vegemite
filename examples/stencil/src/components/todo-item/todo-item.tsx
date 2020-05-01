@@ -34,52 +34,52 @@ export class TodoItem {
 
 	editor!: HTMLInputElement;
 
-	componentWillUpdate() {
+	componentDidUpdate() {
 		if (this.editing) {
 			this.editor.value = this.text;
 			this.editor.focus();
 		}
 	}
 
+	onToggle = () => {
+		todomvc.dispatch("todo:toggle", this.uid);
+	};
+
+	onDestroy = () => {
+		todomvc.dispatch("todo:del", this.uid);
+	};
+
+	onDblClick = () => {
+		this.editing = true;
+	};
+
+	onblur = (ev: FocusEvent | KeyboardEvent): void => {
+		const target = ev.target as HTMLInputElement;
+
+		let title = target.value.trim();
+		if (title.length > 0) {
+			todomvc.dispatch("todo:put", { id: this.uid, title });
+		}
+
+		target.value = "";
+		this.editing = false;
+	};
+
+	onkeydown = (ev: KeyboardEvent) => {
+		if (ev.which === 27) {
+			(ev.target as HTMLInputElement).value = "";
+			this.editing = false;
+		} else if (ev.which === 13) {
+			this.onblur(ev);
+		}
+	};
+
 	render() {
-		const { uid: id, text: title, completed } = this;
+		const { text, completed } = this;
 
 		const classname = [this.editing && "editing", completed && "completed"]
 			.filter(Boolean)
 			.join(" ");
-
-		function onToggle() {
-			todomvc.dispatch("todo:toggle", id);
-		}
-
-		function onDestroy() {
-			todomvc.dispatch("todo:del", id);
-		}
-
-		function onDblClick() {
-			this.editing = true;
-		}
-
-		function onblur(ev: FocusEvent | KeyboardEvent): void {
-			const target = ev.target as HTMLInputElement;
-
-			let title = target.value.trim();
-			if (title.length > 0) {
-				todomvc.dispatch("todo:put", { id, title });
-			}
-
-			target.value = "";
-			this.editing = false;
-		}
-
-		function onkeydown(ev: KeyboardEvent) {
-			if (ev.which === 27) {
-				(ev.target as HTMLInputElement).value = "";
-				this.editing = false;
-			} else if (ev.which === 13) {
-				onblur(ev);
-			}
-		}
 
 		return (
 			<li class={classname}>
@@ -88,17 +88,17 @@ export class TodoItem {
 						type="checkbox"
 						class="toggle"
 						checked={completed}
-						onChange={onToggle}
+						onChange={this.onToggle}
 					/>
-					<label onDblClick={onDblClick}>{title}</label>
-					<button class="destroy" onClick={onDestroy} />
+					<label onDblClick={this.onDblClick}>{text}</label>
+					<button class="destroy" onClick={this.onDestroy} />
 				</div>
 				{this.editing && (
 					<input
 						ref={(el) => (this.editor = el as HTMLInputElement)}
 						class="edit"
-						onBlur={onblur}
-						onKeyDown={onkeydown}
+						onBlur={this.onblur}
+						onKeyDown={this.onkeydown}
 					/>
 				)}
 			</li>
