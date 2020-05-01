@@ -14,9 +14,9 @@ export namespace Components {
         "todos": Todo[];
     }
     interface TodoItem {
-        "_id": Todo["id"];
-        "_title": Todo["title"];
         "completed": Todo["completed"];
+        "text": Todo["title"];
+        "uid": Todo["id"];
     }
 }
 declare global {
@@ -53,9 +53,9 @@ declare namespace LocalJSX {
         "todos"?: Todo[];
     }
     interface TodoItem {
-        "_id"?: Todo["id"];
-        "_title"?: Todo["title"];
         "completed"?: Todo["completed"];
+        "text"?: Todo["title"];
+        "uid"?: Todo["id"];
     }
     interface IntrinsicElements {
         "todo-app": TodoApp;

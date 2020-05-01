@@ -56,32 +56,35 @@ export class TodoApp {
 
 		return (
 			<div class="todoapp">
-			<header class="header">
-				<h1>todos</h1>
-				<input
-					class="new-todo"
-					placeholder="What needs to be done?"
-					onKeyDown={onkeydown} autoFocus={true}
-				/>
-			</header>
+				<header class="header">
+					<h1>todos</h1>
+					<input
+						class="new-todo"
+						placeholder="What needs to be done?"
+						onKeyDown={onkeydown}
+						autoFocus={true}
+					/>
+				</header>
 
-			{
-				this.state.todos.length ? [
-					<section class="main">
-						<input
-							type="checkbox"
-							class="toggle-all"
-							onChange={ontoggleall}
-							checked={!actives}
-						/>
-						<ul class="todo-list">
-							{ visibles.map(({ id, title, ...x }) => <todo-item _id={id} _title={title} {...x} />) }
-						</ul>
-					</section>,
-					<todo-footer {...this.state} count={actives} />
-				] : null
-			}
-		</div>
+				{this.state.todos.length
+					? [
+							<section class="main">
+								<input
+									type="checkbox"
+									class="toggle-all"
+									onChange={ontoggleall}
+									checked={!actives}
+								/>
+								<ul class="todo-list">
+									{visibles.map(({ id, title, ...x }) => (
+										<todo-item uid={id} text={title} {...x} />
+									))}
+								</ul>
+							</section>,
+							<todo-footer {...this.state} count={actives} />,
+					  ]
+					: null}
+			</div>
 		);
 	}
 }
