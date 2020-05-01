@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "stencil build",
-    "start": "stencil build --dev --watch --serve"
+    "watch": "stencil build --dev --watch --serve"
   },
   "dependencies": {
     "vegemite": "file:../../"
