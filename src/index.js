@@ -1,12 +1,12 @@
 import klona from 'klona';
 
-function loop(list, data, state, idx) {
+function loop(list, data, state, idx, isAsync) {
 	var tmp, fn = list[idx++];
-	if (!fn) return Promise.resolve(state);
+	if (!fn) return isAsync ? Promise.resolve(state): state;
 
 	tmp = fn(state, data);
 	if (tmp == null) return loop(list, data, state, idx);
-	if (typeof tmp.then == 'function') return tmp.then(d => loop(list, data, d, idx));
+	if (typeof tmp.then == 'function') return tmp.then(d => loop(list, data, d, idx, true));
 
 	if (typeof tmp == 'object') state = tmp;
 	return loop(list, data, state, idx);
@@ -40,7 +40,9 @@ export default function (obj) {
 		},
 
 		dispatch(evt, data) {
-			return loop(tree[evt] || [], data, klona(value), 0).then(x => $.set(x, evt));
+			var tmp = loop(tree[evt] || [], data, klona(value), 0);
+			if (typeof tmp.then == 'function') return tmp.then(x => $.set(x, evt));
+			else $.set(tmp, evt);
 		}
 	};
 }
