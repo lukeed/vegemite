@@ -41,7 +41,7 @@ export default function (obj) {
 
 		dispatch(evt, data) {
 			var tmp = loop(tree[evt] || [], data, klona(value), 0);
-			if (typeof tmp.then == 'function') return tmp.then(x => $.set(x, evt));
+			if (tmp && typeof tmp.then == 'function') return tmp.then(x => x != undefined && $.set(x, evt));
 			else $.set(tmp, evt);
 		}
 	};
