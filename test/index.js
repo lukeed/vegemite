@@ -76,8 +76,25 @@ test('$.listen', t => {
 	ctx.set({ x: 123 }, 'hello'); // +1 (bat)
 });
 
-test('$.dispatch', async t => {
+test('$.dispatch sync', t => {
 	let ctx = lib({ foo: 123 });
+
+	t.is(typeof ctx.dispatch, 'function', '~> function');
+
+	let data = { bar: 456 };
+
+	let foo = ctx.dispatch('hello', data);
+	t.true(foo instanceof Promise === false, '~> not returns a Promise');
+
+	t.is(foo, undefined, '~> returns to void');
+
+	t.same(ctx.state, { foo: 123 }, '~> $.state NOT changed (no reducers)');
+
+	t.end();
+});
+
+test('$.dispatch async', async t => {
+	let ctx = lib((async () => ({ foo: 123 }))());
 
 	t.is(typeof ctx.dispatch, 'function', '~> function');
 
